@@ -1,261 +1,761 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RISHTONDA TEZ</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RISHTONDA TEZ — Taksi</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
-    body {
-      background: #f5f5f5;
-      color: #111;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-    .app {
-      max-width: 500px;
-      margin: auto;
-      min-height: 100vh;
-      background: white;
-    }
+body{
+  background:#f2f2f2;
+  color:#111;
+}
 
-    header {
-      background: #111;
-      color: white;
-      padding: 22px 18px;
-      border-radius: 0 0 25px 25px;
-    }
+.app{
+  max-width:520px;
+  margin:auto;
+  height:100vh;
+  background:white;
+  position:relative;
+  overflow:hidden;
+}
 
-    .logo {
-      font-size: 27px;
-      font-weight: 800;
-    }
+header{
+  height:70px;
+  background:#ffd600;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  box-shadow:0 2px 8px #0002;
+}
 
-    .subtitle {
-      margin-top: 6px;
-      color: #ccc;
-      font-size: 14px;
-    }
+.logo{
+  font-size:22px;
+  font-weight:900;
+}
 
-    .content {
-      padding: 20px 16px 35px;
-    }
+.city{
+  font-size:13px;
+  color:#444;
+}
 
-    .title {
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 15px;
-    }
+.menu{
+  font-size:27px;
+  cursor:pointer;
+}
 
-    .location-box {
-      background: #f1f1f1;
-      padding: 16px;
-      border-radius: 15px;
-      margin-bottom: 18px;
-    }
+#map{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
 
-    .location-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 9px 0;
-    }
+.bottom{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  background:white;
+  border-radius:25px 25px 0 0;
+  padding:18px;
+  z-index:1000;
+  box-shadow:0 -4px 20px #0002;
+}
 
-    .icon {
-      font-size: 22px;
-    }
+.handle{
+  width:45px;
+  height:5px;
+  background:#ccc;
+  border-radius:10px;
+  margin:0 auto 15px;
+}
 
-    .location-text {
-      font-size: 15px;
-      color: #333;
-    }
+h2{
+  font-size:22px;
+  margin-bottom:15px;
+}
 
-    .btn {
-      width: 100%;
-      border: none;
-      border-radius: 15px;
-      padding: 17px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+.location{
+  background:#f5f5f5;
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-    .taxi-btn {
-      background: #111;
-      color: white;
-    }
+.dot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#111;
+}
 
-    .location-btn {
-      background: #e9e9e9;
-      color: #111;
-    }
+.green{
+  background:#19a85b;
+}
 
-    .services {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 20px;
-    }
+.location-text{
+  flex:1;
+}
 
-    .service {
-      background: #f4f4f4;
-      border-radius: 18px;
-      padding: 22px 12px;
-      text-align: center;
-      font-weight: bold;
-    }
+.location-text b{
+  display:block;
+  font-size:15px;
+}
 
-    .service-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
+.location-text span{
+  color:#888;
+  font-size:13px;
+}
 
-    .status {
-      display: none;
-      margin-top: 18px;
-      padding: 16px;
-      background: #e8f7e8;
-      border-radius: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
+.price-box{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:15px 0;
+}
 
-    footer {
-      text-align: center;
-      color: #777;
-      font-size: 13px;
-      padding: 20px;
-    }
-  </style>
+.price{
+  font-size:23px;
+  font-weight:900;
+}
+
+.cars{
+  color:#666;
+  font-size:14px;
+}
+
+.call{
+  width:100%;
+  border:0;
+  background:#ffd600;
+  padding:17px;
+  border-radius:16px;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.call:active{
+  transform:scale(.98);
+}
+
+.cancel{
+  width:100%;
+  margin-top:8px;
+  padding:12px;
+  background:#eee;
+  border:0;
+  border-radius:14px;
+  font-weight:bold;
+  display:none;
+}
+
+.driver-card{
+  display:none;
+  background:#f6f6f6;
+  border-radius:16px;
+  padding:13px;
+  margin-bottom:12px;
+}
+
+.driver{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.avatar{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.driver-info{
+  flex:1;
+}
+
+.driver-info b{
+  display:block;
+  font-size:16px;
+}
+
+.driver-info span{
+  color:#777;
+  font-size:13px;
+}
+
+.call-driver{
+  background:#111;
+  color:white;
+  border:0;
+  border-radius:12px;
+  padding:11px 14px;
+}
+
+.driver-marker{
+  background:#ffd600;
+  border:3px solid white;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  box-shadow:0 2px 8px #0005;
+}
+
+.my-marker{
+  background:#1976ff;
+  border:4px solid white;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  box-shadow:0 2px 10px #0006;
+}
+
+.status{
+  text-align:center;
+  padding:8px;
+  font-size:14px;
+  color:#555;
+}
+
+@media(max-width:520px){
+  .app{
+    width:100%;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <header>
-    <div class="logo">🚕 RISHTONDA TEZ</div>
-    <div class="subtitle">Rishtondagi tez va qulay xizmat</div>
-  </header>
+<header>
+  <div>
+    <div class="logo">RISHTONDA TEZ 🚕</div>
+    <div class="city">Rishton va Farg‘ona</div>
+  </div>
+  <div class="menu">☰</div>
+</header>
 
-  <div class="content">
+<div id="map"></div>
 
-    <div class="title">Qayerga boramiz?</div>
+<div class="bottom">
 
-    <div class="location-box">
+  <div class="handle"></div>
 
-      <div class="location-row">
-        <div class="icon">📍</div>
-        <div class="location-text" id="currentLocation">
-          Lokatsiyangiz aniqlanmagan
-        </div>
+  <div class="driver-card" id="driverCard">
+    <div class="driver">
+      <div class="avatar">👨‍✈️</div>
+
+      <div class="driver-info">
+        <b id="driverName">Haydovchi</b>
+        <span id="driverCar">Chevrolet Cobalt • 4.9 ⭐</span>
       </div>
 
-      <div class="location-row">
-        <div class="icon">🏁</div>
-        <div class="location-text">
-          Boradigan manzilingizni tanlang
-        </div>
-      </div>
-
+      <button class="call-driver" onclick="callDriver()">
+        📞
+      </button>
     </div>
-
-    <button class="btn location-btn" onclick="getLocation()">
-      📍 Lokatsiyamni aniqlash
-    </button>
-
-    <button class="btn taxi-btn" onclick="callTaxi()">
-      🚕 TAXI CHAQRISH
-    </button>
-
-    <div class="services">
-
-      <div class="service">
-        <div class="service-icon">🚕</div>
-        Taxi
-      </div>
-
-      <div class="service">
-        <div class="service-icon">🍔</div>
-        Oshxona
-      </div>
-
-      <div class="service">
-        <div class="service-icon">🛒</div>
-        Do‘kon
-      </div>
-
-      <div class="service">
-        <div class="service-icon">📦</div>
-        Yetkazib berish
-      </div>
-
-    </div>
-
-    <div class="status" id="status">
-      🚕 Buyurtmangiz qabul qilindi!
-    </div>
-
   </div>
 
-  <footer>
-    © 2026 RISHTONDA TEZ
-  </footer>
+  <h2 id="title">Qayerga boramiz?</h2>
+
+  <div class="location">
+    <div class="dot"></div>
+
+    <div class="location-text">
+      <b id="fromText">Joylashuvingiz</b>
+      <span>Olib ketish manzili</span>
+    </div>
+  </div>
+
+  <div class="location">
+    <div class="dot green"></div>
+
+    <div class="location-text">
+      <b>Manzilni tanlang</b>
+      <span>Qayerga borasiz?</span>
+    </div>
+  </div>
+
+  <div class="price-box">
+    <div>
+      <div class="cars">Yaqin haydovchilar</div>
+      <div class="cars" id="driverCount">0 ta mashina</div>
+    </div>
+
+    <div class="price" id="price">
+      15 000 so‘m
+    </div>
+  </div>
+
+  <div class="status" id="status">
+    Haydovchilar qidirilmoqda...
+  </div>
+
+  <button class="call" id="callButton" onclick="orderTaxi()">
+    🚕 TAKSI CHAQIRISH
+  </button>
+
+  <button class="cancel" id="cancelButton" onclick="cancelOrder()">
+    Bekor qilish
+  </button>
 
 </div>
 
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
 
-function getLocation() {
+let map;
 
-  const locationText = document.getElementById("currentLocation");
+let userLat = 40.3564;
+let userLng = 71.2847;
 
-  if (!navigator.geolocation) {
-    locationText.innerText = "Telefoningiz lokatsiyani qo‘llab-quvvatlamaydi";
-    return;
+let userMarker;
+
+let drivers = [];
+
+let ordered = false;
+
+const driverNames = [
+  "Jasur",
+  "Azizbek",
+  "Sardor",
+  "Muhammad",
+  "Bekzod",
+  "Doston"
+];
+
+const cars = [
+  "Chevrolet Cobalt",
+  "Chevrolet Nexia 3",
+  "Chevrolet Gentra",
+  "Chevrolet Lacetti"
+];
+
+
+// XARITANI ISHGA TUSHIRISH
+map = L.map("map").setView(
+  [userLat,userLng],
+  15
+);
+
+L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom:19,
+    attribution:"© OpenStreetMap"
   }
+).addTo(map);
 
-  locationText.innerText = "📍 Lokatsiya aniqlanmoqda...";
+
+// FOYDALANUVCHI MARKERI
+const userIcon = L.divIcon({
+  className:"",
+  html:'<div class="my-marker"></div>',
+  iconSize:[25,25],
+  iconAnchor:[12,12]
+});
+
+userMarker = L.marker(
+  [userLat,userLng],
+  {icon:userIcon}
+).addTo(map);
+
+
+// JOYLASHUVNI OLISH
+if(navigator.geolocation){
 
   navigator.geolocation.getCurrentPosition(
 
-    function(position) {
+    function(position){
 
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
+      userLat = position.coords.latitude;
+      userLng = position.coords.longitude;
 
-      locationText.innerText =
-        "Lokatsiya topildi ✅ " +
-        lat.toFixed(5) + ", " +
-        lon.toFixed(5);
+      userMarker.setLatLng([
+        userLat,
+        userLng
+      ]);
+
+      map.setView(
+        [userLat,userLng],
+        15
+      );
+
+      document.getElementById("fromText").innerText =
+        "Sizning joylashuvingiz";
+
+      createDrivers();
 
     },
 
-    function() {
+    function(){
 
-      locationText.innerText =
-        "Lokatsiyaga ruxsat berilmadi";
+      createDrivers();
 
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:10000
     }
 
   );
-}
 
-function callTaxi() {
+}else{
 
-  document.getElementById("status").style.display = "block";
-
-  document.getElementById("status").innerText =
-    "🚕 Taxi buyurtmangiz qabul qilindi!";
+  createDrivers();
 
 }
+
+
+// HAYDOVCHI ICON
+function driverIcon(){
+
+  return L.divIcon({
+
+    className:"",
+
+    html:
+      '<div class="driver-marker">🚕</div>',
+
+    iconSize:[38,38],
+
+    iconAnchor:[19,19]
+
+  });
+
+}
+
+
+// HAYDOVCHILARNI YARATISH
+function createDrivers(){
+
+  drivers.forEach(
+    d => map.removeLayer(d.marker)
+  );
+
+  drivers=[];
+
+  for(let i=0;i<7;i++){
+
+    let angle =
+      Math.random() *
+      Math.PI *
+      2;
+
+    let distance =
+      0.002 +
+      Math.random()*0.008;
+
+    let lat =
+      userLat +
+      Math.cos(angle)*distance;
+
+    let lng =
+      userLng +
+      Math.sin(angle)*distance;
+
+    let marker =
+      L.marker(
+        [lat,lng],
+        {
+          icon:driverIcon()
+        }
+      ).addTo(map);
+
+    let driver = {
+
+      marker:marker,
+
+      name:
+        driverNames[
+          i % driverNames.length
+        ],
+
+      car:
+        cars[
+          i % cars.length
+        ],
+
+      lat:lat,
+
+      lng:lng
+
+    };
+
+    marker.bindPopup(
+
+      "<b>🚕 " +
+      driver.name +
+      "</b><br>" +
+
+      driver.car +
+      "<br>⭐ 4.9"
+
+    );
+
+    drivers.push(driver);
+
+  }
+
+  updateDriverCount();
+
+}
+
+
+// HAYDOVCHILAR SONI
+function updateDriverCount(){
+
+  document.getElementById(
+    "driverCount"
+  ).innerText =
+    drivers.length +
+    " ta mashina yaqin";
+
+}
+
+
+// HAYDOVCHILARNI HARAKATLANTIRISH
+setInterval(function(){
+
+  drivers.forEach(function(driver){
+
+    let move =
+      0.0003;
+
+    let direction =
+      Math.random()*Math.PI*2;
+
+    driver.lat +=
+      Math.cos(direction)*move;
+
+    driver.lng +=
+      Math.sin(direction)*move;
+
+    driver.marker.setLatLng([
+      driver.lat,
+      driver.lng
+    ]);
+
+  });
+
+},3000);
+
+
+// TAKSI BUYURTMA
+function orderTaxi(){
+
+  if(ordered) return;
+
+  ordered=true;
+
+  document.getElementById(
+    "status"
+  ).innerText =
+    "🚕 Eng yaqin haydovchi qidirilmoqda...";
+
+  document.getElementById(
+    "callButton"
+  ).innerText =
+    "⏳ HAYDOVCHI QIDIRILMOQDA";
+
+  setTimeout(function(){
+
+    if(drivers.length===0){
+
+      document.getElementById(
+        "status"
+      ).innerText =
+        "Hozircha haydovchi topilmadi";
+
+      ordered=false;
+
+      document.getElementById(
+        "callButton"
+      ).innerText =
+        "🚕 TAKSI CHAQIRISH";
+
+      return;
+
+    }
+
+    let nearest =
+      findNearestDriver();
+
+    document.getElementById(
+      "driverName"
+    ).innerText =
+      nearest.name;
+
+    document.getElementById(
+      "driverCar"
+    ).innerText =
+      nearest.car +
+      " • 4.9 ⭐";
+
+    document.getElementById(
+      "driverCard"
+    ).style.display =
+      "block";
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "✅ Haydovchi buyurtmangizni qabul qildi";
+
+    document.getElementById(
+      "callButton"
+    ).style.display =
+      "none";
+
+    document.getElementById(
+      "cancelButton"
+    ).style.display =
+      "block";
+
+    nearest.marker.openPopup();
+
+  },1800);
+
+}
+
+
+// ENG YAQIN HAYDOVCHI
+function findNearestDriver(){
+
+  let nearest=null;
+
+  let minDistance=Infinity;
+
+  drivers.forEach(function(driver){
+
+    let distance =
+      Math.sqrt(
+
+        Math.pow(
+          driver.lat-userLat,
+          2
+        )
+
+        +
+
+        Math.pow(
+          driver.lng-userLng,
+          2
+        )
+
+      );
+
+    if(distance < minDistance){
+
+      minDistance =
+        distance;
+
+      nearest =
+        driver;
+
+    }
+
+  });
+
+  return nearest;
+
+}
+
+
+// HAYDOVCHIGA QO‘NG‘IROQ
+function callDriver(){
+
+  alert(
+    "Haydovchi bilan bog‘lanish funksiyasi keyingi bosqichda ulanadi."
+  );
+
+}
+
+
+// BUYURTMANI BEKOR QILISH
+function cancelOrder(){
+
+  ordered=false;
+
+  document.getElementById(
+    "driverCard"
+  ).style.display =
+    "none";
+
+  document.getElementById(
+    "cancelButton"
+  ).style.display =
+    "none";
+
+  document.getElementById(
+    "callButton"
+  ).style.display =
+    "block";
+
+  document.getElementById(
+    "callButton"
+  ).innerText =
+    "🚕 TAKSI CHAQIRISH";
+
+  document.getElementById(
+    "status"
+  ).innerText =
+    "Buyurtma bekor qilindi";
+
+}
+
+
+// XARITANI MARKAZGA QAYTARISH
+map.on(
+  "locationfound",
+  function(e){
+
+    userLat =
+      e.latlng.lat;
+
+    userLng =
+      e.latlng.lng;
+
+  }
+);
 
 </script>
 
