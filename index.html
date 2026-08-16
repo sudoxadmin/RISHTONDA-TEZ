@@ -2,8 +2,8 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>VOXIA — AI Movie Translator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOXIA — AI Video Translator</title>
 
 <style>
 *{
@@ -12,60 +12,56 @@
   padding:0;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:#050816;
-  color:#fff;
   min-height:100vh;
+  color:white;
+  background:#050816;
   overflow-x:hidden;
 }
 
 /* BACKGROUND */
 
-body:before{
+body::before{
   content:"";
   position:fixed;
   width:500px;
   height:500px;
-  left:-180px;
-  top:-150px;
-  background:#7c3cff;
-  filter:blur(150px);
-  opacity:.25;
+  background:#0066ff;
+  filter:blur(180px);
+  opacity:.22;
+  top:-180px;
+  left:-150px;
   z-index:-2;
 }
 
-body:after{
+body::after{
   content:"";
   position:fixed;
-  width:500px;
-  height:500px;
-  right:-180px;
-  bottom:-180px;
-  background:#00d9ff;
-  filter:blur(160px);
+  width:450px;
+  height:450px;
+  background:#8b00ff;
+  filter:blur(180px);
   opacity:.18;
+  right:-150px;
+  bottom:-150px;
   z-index:-2;
 }
 
 /* NAVBAR */
 
 nav{
-  position:sticky;
-  top:0;
-  z-index:100;
   height:72px;
-  padding:0 6%;
+  padding:0 7%;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:rgba(5,8,22,.78);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  background:rgba(5,8,22,.72);
   backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.08);
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
 .logo{
@@ -77,283 +73,216 @@ nav{
   color:transparent;
 }
 
-.nav-links{
+.nav-right{
   display:flex;
-  gap:28px;
+  gap:10px;
   align-items:center;
 }
 
-.nav-links a{
-  color:#cbd5e1;
-  text-decoration:none;
-  font-size:14px;
-}
-
-.nav-links a:hover{
-  color:#fff;
-}
-
-.lang-btn{
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  padding:10px 15px;
+.nav-btn{
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.07);
+  color:white;
+  padding:10px 17px;
   border-radius:12px;
+  cursor:pointer;
 }
 
 /* HERO */
 
 .hero{
-  max-width:1100px;
-  margin:auto;
-  padding:90px 20px 50px;
   text-align:center;
+  padding:75px 20px 35px;
 }
 
 .badge{
   display:inline-block;
-  padding:10px 18px;
+  padding:9px 17px;
+  border:1px solid rgba(255,255,255,.18);
   border-radius:50px;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.05);
-  color:#8be9ff;
-  font-size:13px;
-  margin-bottom:25px;
+  background:rgba(255,255,255,.06);
+  color:#9be7ff;
+  margin-bottom:22px;
   animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
-  0%,100%{box-shadow:0 0 0 rgba(0,217,255,0)}
-  50%{box-shadow:0 0 30px rgba(0,217,255,.25)}
+  0%,100%{box-shadow:0 0 0 rgba(0,180,255,0)}
+  50%{box-shadow:0 0 30px rgba(0,180,255,.22)}
 }
 
-.hero h1{
-  font-size:clamp(42px,8vw,86px);
+h1{
+  font-size:clamp(42px,8vw,85px);
   line-height:1;
   font-weight:900;
 }
 
 .gradient{
-  background:linear-gradient(90deg,#fff,#8c7bff,#00d9ff);
+  background:linear-gradient(90deg,#fff,#8a6cff,#00d9ff);
   -webkit-background-clip:text;
   color:transparent;
 }
 
 .hero p{
-  max-width:700px;
-  margin:25px auto;
-  color:#94a3b8;
+  max-width:720px;
+  margin:22px auto;
+  color:#aeb8d0;
   font-size:18px;
-  line-height:1.7;
+  line-height:1.6;
 }
 
-/* MAIN CARD */
+/* APP */
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-
-.card{
-  padding:35px;
-  border-radius:28px;
+.app{
+  width:min(900px,92%);
+  margin:25px auto 70px;
+  padding:30px;
+  border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 30px 100px rgba(0,0,0,.35);
   backdrop-filter:blur(20px);
+  border-radius:28px;
+  box-shadow:0 30px 100px rgba(0,0,0,.35);
 }
 
 /* UPLOAD */
 
 .upload{
-  border:2px dashed rgba(0,217,255,.35);
+  border:2px dashed rgba(0,200,255,.45);
   border-radius:22px;
-  padding:55px 20px;
+  min-height:230px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
   cursor:pointer;
   transition:.3s;
+  background:rgba(0,170,255,.035);
 }
 
 .upload:hover{
-  transform:translateY(-4px);
+  transform:translateY(-3px);
   border-color:#00d9ff;
-  background:rgba(0,217,255,.05);
+  background:rgba(0,170,255,.08);
 }
 
 .upload-icon{
-  font-size:55px;
-  margin-bottom:15px;
+  font-size:58px;
+  margin-bottom:12px;
 }
 
 .upload h2{
-  margin-bottom:10px;
+  font-size:24px;
 }
 
 .upload p{
-  color:#94a3b8;
+  color:#8e99b3;
+  margin-top:8px;
 }
 
-#fileInput{
+#videoInput{
   display:none;
 }
 
-/* FILE INFO */
+/* VIDEO */
 
-.file-info{
+.video-box{
   display:none;
-  margin-top:20px;
-  padding:18px;
-  border-radius:16px;
-  background:rgba(0,217,255,.07);
-  border:1px solid rgba(0,217,255,.2);
+  margin-top:25px;
 }
 
-.file-name{
-  font-weight:bold;
-  margin-bottom:6px;
-}
-
-.file-size{
-  color:#94a3b8;
-  font-size:13px;
-}
-
-/* LANGUAGE */
-
-.section-title{
-  margin:35px 0 15px;
-  font-size:18px;
-}
-
-.search{
+video{
   width:100%;
-  padding:15px 18px;
-  border-radius:14px;
+  max-height:450px;
+  border-radius:18px;
+  background:#000;
+}
+
+/* CONTROLS */
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:22px;
+}
+
+.field{
+  background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.12);
-  background:#0b1024;
-  color:#fff;
-  outline:none;
-  font-size:15px;
+  padding:16px;
+  border-radius:16px;
 }
 
-.search:focus{
-  border-color:#00d9ff;
-}
-
-.languages{
-  margin-top:15px;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
-  gap:10px;
-  max-height:330px;
-  overflow:auto;
-  padding-right:5px;
-}
-
-.language{
-  padding:13px;
-  border-radius:12px;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.08);
-  cursor:pointer;
-  transition:.2s;
-  font-size:14px;
-}
-
-.language:hover{
-  border-color:#00d9ff;
-}
-
-.language.selected{
-  background:linear-gradient(135deg,rgba(124,60,255,.3),rgba(0,217,255,.15));
-  border-color:#00d9ff;
-  box-shadow:0 0 20px rgba(0,217,255,.12);
-}
-
-/* OPTIONS */
-
-.options{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-top:20px;
-}
-
-.option{
-  padding:18px;
-  border-radius:15px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.option small{
-  color:#94a3b8;
+.field label{
   display:block;
-  margin-top:5px;
+  color:#9ca8c0;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+select{
+  width:100%;
+  padding:12px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.15);
+  background:#11182b;
+  color:white;
+  outline:none;
 }
 
 /* BUTTON */
 
-.translate-btn{
+.translate{
   width:100%;
-  margin-top:25px;
-  padding:18px;
   border:0;
-  border-radius:16px;
+  margin-top:22px;
+  padding:17px;
+  border-radius:15px;
+  color:white;
   font-size:17px;
   font-weight:bold;
-  color:#fff;
   cursor:pointer;
-  background:linear-gradient(90deg,#7c3cff,#009dff);
-  box-shadow:0 10px 35px rgba(0,157,255,.25);
+  background:linear-gradient(90deg,#6d3cff,#009dff);
+  box-shadow:0 10px 35px rgba(0,130,255,.25);
   transition:.25s;
 }
 
-.translate-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 15px 45px rgba(0,157,255,.4);
+.translate:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 45px rgba(0,130,255,.4);
 }
 
-.translate-btn:disabled{
-  opacity:.5;
-  cursor:not-allowed;
+.translate:active{
+  transform:scale(.98);
 }
 
 /* PROGRESS */
 
-.progress-box{
+.progress{
   display:none;
   margin-top:25px;
-  padding:25px;
-  border-radius:18px;
-  background:rgba(0,0,0,.25);
 }
 
-.progress-title{
+.progress-text{
   display:flex;
   justify-content:space-between;
-  margin-bottom:12px;
-}
-
-.progress{
-  height:10px;
-  border-radius:10px;
-  background:#151b35;
-  overflow:hidden;
+  color:#b5bfd4;
+  margin-bottom:9px;
 }
 
 .progress-bar{
-  width:0%;
-  height:100%;
-  background:linear-gradient(90deg,#7c3cff,#00d9ff);
-  transition:.4s;
+  height:10px;
+  border-radius:20px;
+  overflow:hidden;
+  background:rgba(255,255,255,.1);
 }
 
-.status{
-  margin-top:12px;
-  color:#94a3b8;
-  font-size:14px;
+.progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#6d3cff,#00d9ff);
+  transition:width .4s;
 }
 
 /* RESULT */
@@ -361,50 +290,83 @@ nav{
 .result{
   display:none;
   margin-top:25px;
-  padding:25px;
+  padding:22px;
   border-radius:20px;
-  background:rgba(34,197,94,.06);
-  border:1px solid rgba(34,197,94,.2);
+  border:1px solid rgba(0,255,170,.2);
+  background:rgba(0,255,170,.04);
 }
 
-.result h3{
-  color:#4ade80;
-  margin-bottom:10px;
+.success{
+  color:#36e8a5;
+  font-size:18px;
+  font-weight:bold;
 }
 
 .download{
   display:inline-block;
   margin-top:15px;
-  padding:13px 20px;
-  border-radius:12px;
-  background:#16a34a;
-  color:#fff;
+  padding:12px 20px;
+  background:#14b87a;
+  color:white;
   text-decoration:none;
-  font-weight:bold;
+  border-radius:12px;
+}
+
+/* LANGUAGES */
+
+.languages{
+  width:min(1000px,92%);
+  margin:0 auto 70px;
+  text-align:center;
+}
+
+.languages h2{
+  font-size:32px;
+  margin-bottom:12px;
+}
+
+.languages p{
+  color:#8994ac;
+  margin-bottom:25px;
+}
+
+.language-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+
+.lang{
+  padding:10px 15px;
+  border-radius:30px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.1);
+  color:#c8d0df;
 }
 
 /* FEATURES */
 
 .features{
-  max-width:1100px;
-  margin:70px auto;
-  padding:20px;
+  width:min(1050px,92%);
+  margin:auto;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
+  margin-bottom:80px;
 }
 
 .feature{
-  padding:28px;
+  padding:25px;
   border-radius:20px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.1);
   transition:.3s;
 }
 
 .feature:hover{
-  transform:translateY(-7px);
-  border-color:rgba(0,217,255,.3);
+  transform:translateY(-6px);
+  border-color:rgba(0,210,255,.4);
 }
 
 .feature-icon{
@@ -412,42 +374,39 @@ nav{
   margin-bottom:15px;
 }
 
+.feature h3{
+  margin-bottom:8px;
+}
+
 .feature p{
-  color:#94a3b8;
-  margin-top:10px;
+  color:#8994ac;
   line-height:1.5;
 }
 
 /* FOOTER */
 
 footer{
-  padding:40px 20px;
   text-align:center;
-  border-top:1px solid rgba(255,255,255,.08);
-  color:#64748b;
+  padding:35px;
+  border-top:1px solid rgba(255,255,255,.1);
+  color:#657089;
 }
-
-/* MOBILE */
 
 @media(max-width:700px){
 
   nav{
-    padding:0 20px;
+    padding:0 5%;
   }
 
-  .nav-links{
+  .nav-btn{
     display:none;
   }
 
-  .hero{
-    padding-top:60px;
+  .app{
+    padding:18px;
   }
 
-  .card{
-    padding:20px;
-  }
-
-  .options{
+  .controls{
     grid-template-columns:1fr;
   }
 
@@ -455,8 +414,12 @@ footer{
     grid-template-columns:1fr;
   }
 
-  .languages{
-    grid-template-columns:repeat(2,1fr);
+  .hero{
+    padding-top:50px;
+  }
+
+  h1{
+    font-size:48px;
   }
 }
 </style>
@@ -467,486 +430,361 @@ footer{
 <nav>
   <div class="logo">VOXIA</div>
 
-  <div class="nav-links">
-    <a href="#translate">Tarjima</a>
-    <a href="#features">Imkoniyatlar</a>
-    <a href="#about">Biz haqimizda</a>
+  <div class="nav-right">
+    <button class="nav-btn">🌐 Til</button>
+    <button class="nav-btn">Kirish</button>
   </div>
-
-  <button class="lang-btn" onclick="changeInterfaceLanguage()">
-    🌐 UZ
-  </button>
 </nav>
+
 
 <section class="hero">
 
-  <div class="badge">
-    ✨ AI POWERED MOVIE TRANSLATION
-  </div>
+  <div class="badge">✦ AI POWERED VIDEO TRANSLATION</div>
 
   <h1>
-    Kinoni
-    <span class="gradient">dunyo tillariga</span>
-    aylantiring
+    Videoni <span class="gradient">istalgan tilga</span>
+    tarjima qiling.
   </h1>
 
   <p>
-    VOXIA — video va filmlardagi nutqni aniqlash,
-    tarjima qilish va boshqa tillarda ovozlashtirish
-    uchun yaratilayotgan AI platforma.
+    VOXIA — videodagi nutqni boshqa tillarga tarjima qilish,
+    subtitr yaratish va kelajakda ovozni ham yangi tilga moslashtirish
+    uchun yaratilgan AI platforma.
   </p>
 
 </section>
 
-<main class="container" id="translate">
 
-<div class="card">
+<section class="app">
 
-  <label class="upload" for="fileInput">
+  <label class="upload" for="videoInput">
 
-    <div class="upload-icon">🎬</div>
+    <div>
 
-    <h2>Kinoni yuklang</h2>
+      <div class="upload-icon">🎬</div>
 
-    <p>
-      MP4, MOV, MKV yoki boshqa video faylni tanlang
-    </p>
+      <h2>Videoni shu yerga yuklang</h2>
 
-    <br>
+      <p>
+        MP4, MOV, WEBM va boshqa video formatlari
+      </p>
 
-    <span style="color:#00d9ff">
-      📁 Fayl tanlash
-    </span>
+      <p style="margin-top:15px;color:#00d9ff">
+        Fayl tanlash uchun bosing
+      </p>
+
+    </div>
 
   </label>
 
   <input
-    id="fileInput"
+    id="videoInput"
     type="file"
     accept="video/*"
   >
 
-  <div class="file-info" id="fileInfo">
-    <div class="file-name" id="fileName"></div>
-    <div class="file-size" id="fileSize"></div>
-  </div>
 
-  <div class="section-title">
-    🌍 Qaysi tilga tarjima qilamiz?
-  </div>
+  <div class="video-box" id="videoBox">
 
-  <input
-    class="search"
-    id="languageSearch"
-    placeholder="Tilni qidiring..."
-  >
+    <video
+      id="video"
+      controls
+      playsinline>
+    </video>
 
-  <div class="languages" id="languages"></div>
+    <div class="controls">
 
-  <div class="section-title">
-    ⚙️ Tarjima sozlamalari
-  </div>
+      <div class="field">
 
-  <div class="options">
+        <label>🎙 Asl til</label>
 
-    <div class="option">
-      🎙️ Ovoz
-      <small>AI ovozlashtirish</small>
-    </div>
+        <select id="sourceLang">
 
-    <div class="option">
-      💬 Subtitr
-      <small>AI subtitr yaratish</small>
-    </div>
+          <option value="auto">Avtomatik aniqlash</option>
+          <option>O'zbek</option>
+          <option>English</option>
+          <option>Русский</option>
+          <option>Türkçe</option>
+          <option>العربية</option>
+          <option>Deutsch</option>
+          <option>Français</option>
+          <option>Español</option>
+          <option>Italiano</option>
+          <option>Português</option>
+          <option>한국어</option>
+          <option>中文</option>
+          <option>日本語</option>
 
-    <div class="option">
-      🎧 Original
-      <small>Ovoz sifatini saqlash</small>
-    </div>
+        </select>
 
-  </div>
-
-  <button
-    class="translate-btn"
-    id="translateBtn"
-    disabled
-  >
-    🚀 VOXIA bilan tarjima qilish
-  </button>
-
-  <div class="progress-box" id="progressBox">
-
-    <div class="progress-title">
-      <b>AI ishlamoqda...</b>
-      <span id="percent">0%</span>
-    </div>
-
-    <div class="progress">
-      <div
-        class="progress-bar"
-        id="progressBar">
       </div>
+
+
+      <div class="field">
+
+        <label>🌍 Tarjima qilinadigan til</label>
+
+        <select id="targetLang">
+
+          <option>O'zbek</option>
+          <option>English</option>
+          <option>Русский</option>
+          <option>Türkçe</option>
+          <option>العربية</option>
+          <option>Deutsch</option>
+          <option>Français</option>
+          <option>Español</option>
+          <option>Italiano</option>
+          <option>Português</option>
+          <option>한국어</option>
+          <option>中文</option>
+          <option>日本語</option>
+          <option>Hindi</option>
+          <option>বাংলা</option>
+          <option>فارسی</option>
+          <option>Українська</option>
+          <option>Polski</option>
+          <option>Nederlands</option>
+          <option>Қазақша</option>
+          <option>Кыргызча</option>
+          <option>Тоҷикӣ</option>
+
+        </select>
+
+      </div>
+
     </div>
 
-    <div class="status" id="status">
-      Video tahlil qilinmoqda...
+
+    <button
+      class="translate"
+      onclick="startTranslation()">
+
+      ✨ AI TARJIMA QILISH
+
+    </button>
+
+
+    <div class="progress" id="progress">
+
+      <div class="progress-text">
+
+        <span id="status">
+          AI tayyorlanmoqda...
+        </span>
+
+        <span id="percent">0%</span>
+
+      </div>
+
+      <div class="progress-bar">
+
+        <div
+          class="progress-fill"
+          id="progressFill">
+        </div>
+
+      </div>
+
     </div>
 
-  </div>
 
-  <div class="result" id="result">
+    <div class="result" id="result">
 
-    <h3>✅ Tarjima tayyor!</h3>
+      <div class="success">
+        ✓ Tarjima jarayoni yakunlandi
+      </div>
 
-    <p>
-      Demo rejim tugadi. Haqiqiy video tarjimasi uchun
-      VOXIA serveri va AI API ulanishi kerak.
-    </p>
+      <p style="color:#9aa6bd;margin-top:8px">
+        Demo rejim: keyingi bosqichda haqiqiy AI server
+        ulanadi.
+      </p>
 
-    <a
-      class="download"
-      href="#"
-      onclick="return false;"
-    >
-      ⬇️ Natijani yuklash
-    </a>
+    </div>
 
-  </div>
-
-</div>
-
-</main>
-
-<section class="features" id="features">
-
-  <div class="feature">
-    <div class="feature-icon">🌎</div>
-    <h3>Dunyo tillari</h3>
-    <p>
-      Ko‘plab davlat va hudud tillarini tanlash
-      imkoniyati.
-    </p>
-  </div>
-
-  <div class="feature">
-    <div class="feature-icon">🤖</div>
-    <h3>AI tarjima</h3>
-    <p>
-      Nutqni aniqlash, tarjima va ovozlashtirish
-      tizimlari bilan ishlash uchun tayyor interfeys.
-    </p>
-  </div>
-
-  <div class="feature">
-    <div class="feature-icon">🎬</div>
-    <h3>Video bilan ishlash</h3>
-    <p>
-      Foydalanuvchi video faylini yuklashi va
-      tarjima jarayonini kuzatishi mumkin.
-    </p>
   </div>
 
 </section>
 
-<footer id="about">
-  <b>VOXIA</b> © 2026 — AI Movie Translation Platform
+
+<section class="languages">
+
+  <h2>🌍 Dunyoning turli tillari</h2>
+
+  <p>
+    VOXIA kelajakda ko‘plab tillarda video tarjimasini
+    qo‘llab-quvvatlash uchun ishlab chiqilmoqda.
+  </p>
+
+  <div class="language-grid">
+
+    <div class="lang">🇺🇿 O'zbek</div>
+    <div class="lang">🇬🇧 English</div>
+    <div class="lang">🇷🇺 Русский</div>
+    <div class="lang">🇹🇷 Türkçe</div>
+    <div class="lang">🇸🇦 العربية</div>
+    <div class="lang">🇩🇪 Deutsch</div>
+    <div class="lang">🇫🇷 Français</div>
+    <div class="lang">🇪🇸 Español</div>
+    <div class="lang">🇮🇹 Italiano</div>
+    <div class="lang">🇵🇹 Português</div>
+    <div class="lang">🇨🇳 中文</div>
+    <div class="lang">🇯🇵 日本語</div>
+    <div class="lang">🇰🇷 한국어</div>
+    <div class="lang">🇮🇳 हिन्दी</div>
+    <div class="lang">🇰🇿 Қазақша</div>
+    <div class="lang">🇰🇬 Кыргызча</div>
+    <div class="lang">🇹🇯 Тоҷикӣ</div>
+    <div class="lang">🇺🇦 Українська</div>
+    <div class="lang">🇵🇱 Polski</div>
+    <div class="lang">🇳🇱 Nederlands</div>
+
+  </div>
+
+</section>
+
+
+<section class="features">
+
+  <div class="feature">
+
+    <div class="feature-icon">🎬</div>
+
+    <h3>Video yuklash</h3>
+
+    <p>
+      Foydalanuvchi o‘z videosini platformaga
+      yuklashi mumkin.
+    </p>
+
+  </div>
+
+
+  <div class="feature">
+
+    <div class="feature-icon">🧠</div>
+
+    <h3>AI tarjima</h3>
+
+    <p>
+      Video nutqini aniqlash va boshqa tilga
+      tarjima qilish tizimi.
+    </p>
+
+  </div>
+
+
+  <div class="feature">
+
+    <div class="feature-icon">🌍</div>
+
+    <h3>Ko‘p tilli</h3>
+
+    <p>
+      Platformani imkon qadar ko‘p tillarga
+      kengaytirish mumkin.
+    </p>
+
+  </div>
+
+</section>
+
+
+<footer>
+
+  <strong>VOXIA</strong> © 2026 —
+  AI Video Translation Platform
+
 </footer>
+
 
 <script>
 
-/* =========================
-   LANGUAGES
-========================= */
+const input = document.getElementById("videoInput");
+const video = document.getElementById("video");
+const videoBox = document.getElementById("videoBox");
 
-const languageData = [
+input.addEventListener("change", function(){
 
-["🇺🇿","O‘zbekcha"],
-["🇬🇧","English"],
-["🇺🇸","English (US)"],
-["🇷🇺","Русский"],
-["🇨🇳","中文"],
-["🇯🇵","日本語"],
-["🇰🇷","한국어"],
-["🇩🇪","Deutsch"],
-["🇫🇷","Français"],
-["🇪🇸","Español"],
-["🇮🇹","Italiano"],
-["🇵🇹","Português"],
-["🇹🇷","Türkçe"],
-["🇸🇦","العربية"],
-["🇮🇳","हिन्दी"],
-["🇧🇩","বাংলা"],
-["🇮🇷","فارسی"],
-["🇵🇰","اردو"],
-["🇮🇱","עברית"],
-["🇳🇱","Nederlands"],
-["🇵🇱","Polski"],
-["🇺🇦","Українська"],
-["🇨🇿","Čeština"],
-["🇸🇰","Slovenčina"],
-["🇭🇺","Magyar"],
-["🇷🇴","Română"],
-["🇧🇬","Български"],
-["🇬🇷","Ελληνικά"],
-["🇷🇸","Српски"],
-["🇭🇷","Hrvatski"],
-["🇸🇮","Slovenščina"],
-["🇦🇱","Shqip"],
-["🇲🇰","Македонски"],
-["🇧🇦","Bosanski"],
-["🇬🇪","ქართული"],
-["🇦🇲","Հայերեն"],
-["🇦🇿","Azərbaycan"],
-["🇰🇿","Қазақша"],
-["🇰🇬","Кыргызча"],
-["🇹🇯","Тоҷикӣ"],
-["🇹🇲","Türkmençe"],
-["🇲🇳","Монгол"],
-["🇻🇳","Tiếng Việt"],
-["🇹🇭","ไทย"],
-["🇮🇩","Bahasa Indonesia"],
-["🇲🇾","Bahasa Melayu"],
-["🇵🇭","Filipino"],
-["🇮🇳","தமிழ்"],
-["🇮🇳","తెలుగు"],
-["🇮🇳","मराठी"],
-["🇮🇳","ગુજરાતી"],
-["🇮🇳","ਪੰਜਾਬੀ"],
-["🇮🇳","ಕನ್ನಡ"],
-["🇮🇳","മലയാളം"],
-["🇮🇳","বাংলা"],
-["🇳🇴","Norsk"],
-["🇸🇪","Svenska"],
-["🇩🇰","Dansk"],
-["🇫🇮","Suomi"],
-["🇮🇸","Íslenska"],
-["🇮🇪","Gaeilge"],
-["🇪🇪","Eesti"],
-["🇱🇻","Latviešu"],
-["🇱🇹","Lietuvių"],
-["🇲🇹","Malti"],
-["🇱🇺","Lëtzebuergesch"],
-["🇨🇭","Deutsch Schweiz"],
-["🇨🇦","Français Canada"],
-["🇧🇷","Português Brasil"],
-["🇲🇽","Español México"],
-["🇨🇱","Español Chile"],
-["🇦🇷","Español Argentina"],
-["🇨🇴","Español Colombia"],
-["🇵🇪","Español Perú"],
-["🇿🇦","Afrikaans"],
-["🇸🇼","Kiswahili"],
-["🇪🇹","አማርኛ"],
-["🇳🇬","Yorùbá"],
-["🇳🇬","Igbo"],
-["🇳🇬","Hausa"],
-["🇰🇪","Kiswahili"],
-["🇿🇦","isiZulu"],
-["🇿🇦","isiXhosa"],
-["🇸🇴","Soomaali"],
-["🇳🇵","नेपाली"],
-["🇱🇰","සිංහල"],
-["🇲🇲","မြန်မာ"],
-["🇰🇭","ខ្មែរ"],
-["🇱🇦","ລາວ"],
-["🇲🇳","Монгол хэл"],
-["🇦🇫","پښتو"],
-["🇰🇵","한국어"],
-["🇱🇰","தமிழ்"],
-["🇧🇦","Bosanski"],
-["🇲🇩","Română Moldova"],
-["🇧🇾","Беларуская"],
-["🇮🇪","English Ireland"],
-["🇨🇭","Français Suisse"],
-["🇦🇹","Deutsch Österreich"],
-["🇨🇭","Italiano Svizzera"]
+  const file = this.files[0];
 
-];
+  if(!file) return;
 
-const languagesBox =
-document.getElementById("languages");
+  if(!file.type.startsWith("video/")){
+    alert("Iltimos, video fayl tanlang.");
+    return;
+  }
 
-let selectedLanguage = null;
+  const url = URL.createObjectURL(file);
 
-function renderLanguages(filter=""){
+  video.src = url;
 
-  languagesBox.innerHTML="";
+  videoBox.style.display = "block";
 
-  languageData
-  .filter(x =>
-    x[1].toLowerCase()
-    .includes(filter.toLowerCase())
-  )
-  .forEach(x=>{
-
-    const div =
-    document.createElement("div");
-
-    div.className="language";
-
-    div.innerHTML =
-    x[0]+" "+x[1];
-
-    div.onclick=()=>{
-
-      document
-      .querySelectorAll(".language")
-      .forEach(el =>
-        el.classList.remove("selected")
-      );
-
-      div.classList.add("selected");
-
-      selectedLanguage=x[1];
-
-      checkReady();
-    };
-
-    languagesBox.appendChild(div);
-
+  videoBox.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
   });
-}
-
-renderLanguages();
-
-/* SEARCH */
-
-document
-.getElementById("languageSearch")
-.addEventListener("input",e=>{
-  renderLanguages(e.target.value);
-});
-
-/* FILE */
-
-let selectedFile=null;
-
-document
-.getElementById("fileInput")
-.addEventListener("change",function(){
-
-  if(!this.files.length) return;
-
-  selectedFile=this.files[0];
-
-  document
-  .getElementById("fileInfo")
-  .style.display="block";
-
-  document
-  .getElementById("fileName")
-  .textContent=
-  "🎬 "+selectedFile.name;
-
-  document
-  .getElementById("fileSize")
-  .textContent=
-  formatSize(selectedFile.size);
-
-  checkReady();
 
 });
 
-function formatSize(bytes){
 
-  if(bytes<1024)
-    return bytes+" B";
+function startTranslation(){
 
-  if(bytes<1024*1024)
-    return (bytes/1024).toFixed(1)+" KB";
+  const progress = document.getElementById("progress");
+  const fill = document.getElementById("progressFill");
+  const percent = document.getElementById("percent");
+  const status = document.getElementById("status");
+  const result = document.getElementById("result");
 
-  if(bytes<1024*1024*1024)
-    return (bytes/1024/1024).toFixed(1)+" MB";
+  progress.style.display = "block";
+  result.style.display = "none";
 
-  return (bytes/1024/1024/1024).toFixed(2)+" GB";
-}
+  let value = 0;
 
-/* READY */
+  const messages = [
 
-function checkReady(){
-
-  const btn=
-  document.getElementById("translateBtn");
-
-  btn.disabled =
-  !(selectedFile && selectedLanguage);
-
-}
-
-/* TRANSLATE DEMO */
-
-document
-.getElementById("translateBtn")
-.addEventListener("click",()=>{
-
-  const box=
-  document.getElementById("progressBox");
-
-  const result=
-  document.getElementById("result");
-
-  const bar=
-  document.getElementById("progressBar");
-
-  const percent=
-  document.getElementById("percent");
-
-  const status=
-  document.getElementById("status");
-
-  box.style.display="block";
-  result.style.display="none";
-
-  let progress=0;
-
-  const messages=[
-    "Video tahlil qilinmoqda...",
+    "Video tekshirilmoqda...",
     "Nutq aniqlanmoqda...",
     "Matn ajratilmoqda...",
     "AI tarjima qilmoqda...",
-    "Ovoz tayyorlanmoqda...",
-    "Video qayta yig‘ilmoqda..."
+    "Subtitr tayyorlanmoqda...",
+    "Audio tayyorlanmoqda...",
+    "Natija tayyorlanmoqda..."
+
   ];
 
-  const timer=setInterval(()=>{
+  const timer = setInterval(function(){
 
-    progress += Math.floor(Math.random()*8)+3;
+    value += Math.floor(Math.random()*8)+3;
 
-    if(progress>=100){
-      progress=100;
+    if(value >= 100){
+
+      value = 100;
+
       clearInterval(timer);
 
-      status.textContent=
-      "Tarjima jarayoni yakunlandi.";
+      status.textContent =
+        "Demo jarayon yakunlandi ✓";
 
-      setTimeout(()=>{
-        result.style.display="block";
-      },700);
+      result.style.display = "block";
 
     }else{
 
-      status.textContent=
-      messages[
-        Math.floor(progress/18)
-      ] || messages[0];
+      status.textContent =
+        messages[Math.min(
+          Math.floor(value/15),
+          messages.length-1
+        )];
 
     }
 
-    bar.style.width=progress+"%";
-    percent.textContent=progress+"%";
+    fill.style.width = value + "%";
+
+    percent.textContent =
+      value + "%";
 
   },500);
-
-});
-
-/* INTERFACE LANGUAGE */
-
-function changeInterfaceLanguage(){
-
-  alert(
-    "VOXIA interfeysi uchun ko‘p tilli tizim tayyorlanadi. " +
-    "Keyingi bosqichda interfeys tilini avtomatik aniqlashni ham qo‘shamiz."
-  );
 
 }
 
