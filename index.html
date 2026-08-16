@@ -729,7 +729,7 @@ input.addEventListener("change", function(){
 });
 
 
-function startTranslation(){
+async function startTranslation(){
 
   const progress = document.getElementById("progress");
   const fill = document.getElementById("progressFill");
@@ -737,57 +737,87 @@ function startTranslation(){
   const status = document.getElementById("status");
   const result = document.getElementById("result");
 
+  const targetLanguage = document.getElementById("targetLanguage")?.value;
+
+  if(!targetLanguage){
+    alert("Tarjima tilini tanlang.");
+    return;
+  }
+
   progress.style.display = "block";
   result.style.display = "none";
 
-  let value = 0;
+  fill.style.width = "10%";
+  percent.textContent = "10%";
+  status.textContent = "Tarjima tayyorlanmoqda...";
 
-  const messages = [
+  try {
 
-    "Video tekshirilmoqda...",
-    "Nutq aniqlanmoqda...",
-    "Matn ajratilmoqda...",
-    "AI tarjima qilmoqda...",
-    "Subtitr tayyorlanmoqda...",
-    "Audio tayyorlanmoqda...",
-    "Natija tayyorlanmoqda..."
+    /*
+      MUHIM:
+      Quyidagi URL o‘rniga sizning Render serveringizning
+      ANIQ URL manzilini yozamiz.
+    */
 
-  ];
+    const SERVER_URL = "https://SIZNING-RENDER-SERVERINGIZ.onrender.com";
 
-  const timer = setInterval(function(){
+    const response = await fetch(SERVER_URL + "/translate", {
+      method: "POST",
 
-    value += Math.floor(Math.random()*8)+3;
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-    if(value >= 100){
+      body: JSON.stringify({
+        text: "Videodagi nutqni tarjima qilish",
+        targetLanguage: targetLanguage
+      })
+    });
 
-      value = 100;
+    fill.style.width = "70%";
+    percent.textContent = "70%";
+    status.textContent = "AI tarjima qilmoqda...";
 
-      clearInterval(timer);
+    const data = await response.json();
 
-      status.textContent =
-        "Demo jarayon yakunlandi ✓";
-
-      result.style.display = "block";
-
-    }else{
-
-      status.textContent =
-        messages[Math.min(
-          Math.floor(value/15),
-          messages.length-1
-        )];
-
+    if(!response.ok || !data.success){
+      throw new Error(data.error || "Tarjima serverida xatolik.");
     }
 
-    fill.style.width = value + "%";
+    fill.style.width = "100%";
+    percent.textContent = "100%";
+    status.textContent = "Tarjima yakunlandi ✓";
 
-    percent.textContent =
-      value + "%";
+    result.style.display = "block";
 
-  },500);
+    result.innerHTML = `
+      <div style="font-size:22px;font-weight:bold;margin-bottom:10px;">
+        ✅ Tarjima tayyor
+      </div>
 
+      <div style="font-size:17px;line-height:1.6;">
+        ${data.translation}
+      </div>
+    `;
+
+  } catch(error) {
+
+    console.error(error);
+
+    fill.style.width = "0%";
+    percent.textContent = "0%";
+
+    status.textContent = "Xatolik yuz berdi ❌";
+
+    result.style.display = "block";
+
+    result.innerHTML = `
+      <div style="color:#ff6b6b;font-size:18px;">
+        ❌ ${error.message}
+      </div>
+    `;
+  }
 }
-
 </script>
 
 </body>
