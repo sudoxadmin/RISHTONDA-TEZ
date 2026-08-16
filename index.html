@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VOXIA — AI Movie Translator</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+font-family:Arial,sans-serif;
+background:#050816;
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+}
+body:before{
+content:"";
+position:fixed;
+width:500px;height:500px;
+background:#6c2cff;
+filter:blur(180px);
+opacity:.25;
+top:-150px;left:-150px;
+z-index:-1;
+}
+body:after{
+content:"";
+position:fixed;
+width:450px;height:450px;
+background:#00d9ff;
+filter:blur(180px);
+opacity:.18;
+right:-150px;bottom:-100px;
+z-index:-1;
+}
+
+nav{
+height:75px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 7%;
+border-bottom:1px solid #ffffff18;
+background:#050816cc;
+backdrop-filter:blur(15px);
+position:sticky;
+top:0;
+z-index:20;
+}
+.logo{
+font-size:28px;
+font-weight:900;
+letter-spacing:2px;
+background:linear-gradient(90deg,#7c3cff,#00d9ff);
+-webkit-background-clip:text;
+color:transparent;
+}
+.navbtn{
+border:1px solid #ffffff22;
+background:#ffffff0d;
+color:white;
+padding:10px 18px;
+border-radius:12px;
+}
+
+.hero{
+text-align:center;
+padding:90px 20px 50px;
+}
+.badge{
+display:inline-block;
+padding:9px 17px;
+border:1px solid #ffffff20;
+background:#ffffff09;
+border-radius:50px;
+color:#8eeaff;
+margin-bottom:25px;
+animation:pulse 2s infinite;
+}
+h1{
+font-size:clamp(42px,8vw,85px);
+line-height:1;
+font-weight:900;
+}
+.gradient{
+background:linear-gradient(90deg,#fff,#9b72ff,#00e1ff);
+-webkit-background-clip:text;
+color:transparent;
+}
+.hero p{
+max-width:720px;
+margin:25px auto;
+font-size:19px;
+color:#aeb7cf;
+line-height:1.6;
+}
+
+.globe{
+width:180px;
+height:180px;
+margin:40px auto;
+border-radius:50%;
+border:1px solid #00d9ff77;
+box-shadow:
+0 0 30px #00d9ff33,
+inset 0 0 50px #7c3cff33;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:75px;
+animation:float 4s ease-in-out infinite,spin 12s linear infinite;
+}
+
+.card{
+width:min(850px,92%);
+margin:auto;
+padding:30px;
+border:1px solid #ffffff18;
+background:#ffffff08;
+border-radius:25px;
+box-shadow:0 20px 80px #0008;
+backdrop-filter:blur(20px);
+}
+
+.upload{
+border:2px dashed #53617c;
+border-radius:20px;
+padding:55px 20px;
+text-align:center;
+cursor:pointer;
+transition:.3s;
+}
+.upload:hover{
+border-color:#00d9ff;
+background:#00d9ff08;
+transform:scale(1.01);
+}
+.upload-icon{font-size:55px;margin-bottom:15px}
+.upload h2{margin-bottom:10px}
+.upload p{color:#8995ad}
+
+input[type=file]{display:none}
+
+.file{
+display:none;
+margin-top:20px;
+padding:15px;
+background:#0005;
+border-radius:14px;
+}
+
+.settings{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-top:20px;
+}
+label{
+display:block;
+color:#aeb7cf;
+font-size:14px;
+margin-bottom:7px;
+}
+select{
+width:100%;
+padding:15px;
+border-radius:12px;
+border:1px solid #ffffff20;
+background:#11182a;
+color:white;
+outline:none;
+}
+
+.start{
+width:100%;
+margin-top:20px;
+padding:17px;
+border:0;
+border-radius:14px;
+font-size:17px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(90deg,#713cff,#00bde8);
+box-shadow:0 10px 35px #713cff44;
+transition:.3s;
+}
+.start:hover{
+transform:translateY(-2px);
+box-shadow:0 15px 45px #00d9ff44;
+}
+
+.progress{
+display:none;
+margin-top:25px;
+}
+.bar{
+height:10px;
+background:#ffffff12;
+border-radius:20px;
+overflow:hidden;
+}
+.bar div{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#713cff,#00e1ff);
+transition:width .5s;
+}
+.status{
+margin-top:12px;
+color:#9cecff;
+text-align:center;
+}
+
+.languages{
+width:min(1100px,92%);
+margin:80px auto;
+}
+.languages h2{
+font-size:35px;
+margin-bottom:10px;
+}
+.languages p{color:#8f9ab1;margin-bottom:25px}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:10px;
+}
+.lang{
+padding:14px;
+background:#ffffff08;
+border:1px solid #ffffff12;
+border-radius:12px;
+transition:.25s;
+}
+.lang:hover{
+background:#ffffff12;
+transform:translateY(-3px);
+border-color:#00d9ff55;
+}
+
+footer{
+padding:50px 20px;
+text-align:center;
+border-top:1px solid #ffffff12;
+color:#77839c;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-15px)}
+}
+@keyframes spin{
+0%{box-shadow:0 0 30px #00d9ff33,inset 0 0 50px #7c3cff33}
+50%{box-shadow:0 0 60px #7c3cff55,inset 0 0 80px #00d9ff33}
+100%{box-shadow:0 0 30px #00d9ff33,inset 0 0 50px #7c3cff33}
+}
+@keyframes pulse{
+50%{box-shadow:0 0 25px #00d9ff33}
+}
+
+@media(max-width:600px){
+nav{padding:0 5%}
+.settings{grid-template-columns:1fr}
+.hero{padding-top:60px}
+.card{padding:18px}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">VOXIA</div>
+<button class="navbtn">🌍 Global AI</button>
+</nav>
+
+<section class="hero">
+
+<div class="badge">✦ AI MOVIE TRANSLATOR</div>
+
+<h1>
+Your Movie.<br>
+<span class="gradient">Every Language.</span>
+</h1>
+
+<p>
+Videoni yuklang va VOXIA yordamida uni turli tillarga
+tarjima qilish, subtitr yaratish va ovozli dublyajga tayyorlash.
+</p>
+
+<div class="globe">🌍</div>
+
+</section>
+
+<section class="card">
+
+<label>🎬 KINONI YUKLANG</label>
+
+<label class="upload" for="movie">
+<div class="upload-icon">🎥</div>
+<h2>Videoni shu yerga tashlang</h2>
+<p>MP4, MOV, MKV va boshqa video formatlar</p>
+<p style="margin-top:10px;color:#6edfff">
+Yoki telefoningizdan tanlang
+</p>
+</label>
+
+<input id="movie" type="file" accept="video/*">
+
+<div class="file" id="fileBox"></div>
+
+<div class="settings">
+
+<div>
+<label>Asl til</label>
+<select id="source">
+<option value="auto">🤖 Avtomatik aniqlash</option>
+</select>
+</div>
+
+<div>
+<label>Tarjima tili</label>
+<select id="target"></select>
+</div>
+
+</div>
+
+<button class="start" onclick="translateMovie()">
+✨ VOXIA AI TARJIMA QILISH
+</button>
+
+<div class="progress" id="progress">
+<div class="bar">
+<div id="bar"></div>
+</div>
+<div class="status" id="status">
+AI tayyorlanmoqda...
+</div>
+</div>
+
+</section>
+
+<section class="languages">
+
+<h2>🌍 Global Languages</h2>
+<p>VOXIA uchun kengaytirilgan til katalogi</p>
+
+<div class="grid" id="languageGrid"></div>
+
+</section>
+
+<footer>
+<div class="logo">VOXIA</div>
+<p style="margin-top:12px">
+AI-powered multilingual movie technology
+</p>
+<p style="margin-top:8px">
+© 2026 VOXIA
+</p>
+</footer>
+
+<script>
+
+const languages = [
+
+["🇺🇿","O‘zbek","Uzbek"],
+["🇬🇧","English","English"],
+["🇷🇺","Русский","Russian"],
+["🇹🇷","Türkçe","Turkish"],
+["🇰🇿","Қазақша","Kazakh"],
+["🇰🇬","Кыргызча","Kyrgyz"],
+["🇹🇯","Тоҷикӣ","Tajik"],
+["🇹🇲","Türkmençe","Turkmen"],
+["🇦🇿","Azərbaycan","Azerbaijani"],
+["🇸🇦","العربية","Arabic"],
+["🇮🇷","فارسی","Persian"],
+["🇮🇱","עברית","Hebrew"],
+["🇮🇳","हिन्दी","Hindi"],
+["🇵🇰","اردو","Urdu"],
+["🇧🇩","বাংলা","Bengali"],
+["🇨🇳","中文","Chinese"],
+["🇯🇵","日本語","Japanese"],
+["🇰🇷","한국어","Korean"],
+["🇻🇳","Tiếng Việt","Vietnamese"],
+["🇹🇭","ไทย","Thai"],
+["🇮🇩","Bahasa Indonesia","Indonesian"],
+["🇲🇾","Bahasa Melayu","Malay"],
+["🇵🇭","Filipino","Filipino"],
+["🇲🇳","Монгол","Mongolian"],
+["🇬🇪","ქართული","Georgian"],
+["🇦🇲","Հայերեն","Armenian"],
+["🇬🇷","Ελληνικά","Greek"],
+["🇧🇬","Български","Bulgarian"],
+["🇷🇸","Српски","Serbian"],
+["🇭🇷","Hrvatski","Croatian"],
+["🇧🇦","Bosanski","Bosnian"],
+["🇸🇮","Slovenščina","Slovenian"],
+["🇸🇰","Slovenčina","Slovak"],
+["🇨🇿","Čeština","Czech"],
+["🇵🇱","Polski","Polish"],
+["🇺🇦","Українська","Ukrainian"],
+["🇧🇾","Беларуская","Belarusian"],
+["🇷🇴","Română","Romanian"],
+["🇭🇺","Magyar","Hungarian"],
+["🇩🇪","Deutsch","German"],
+["🇫🇷","Français","French"],
+["🇪🇸","Español","Spanish"],
+["🇮🇹","Italiano","Italian"],
+["🇵🇹","Português","Portuguese"],
+["🇳🇱","Nederlands","Dutch"],
+["🇧🇪","Vlaams","Flemish"],
+["🇩🇰","Dansk","Danish"],
+["🇳🇴","Norsk","Norwegian"],
+["🇸🇪","Svenska","Swedish"],
+["🇫🇮","Suomi","Finnish"],
+["🇮🇸","Íslenska","Icelandic"],
+["🇮🇪","Gaeilge","Irish"],
+["🇪🇪","Eesti","Estonian"],
+["🇱🇻","Latviešu","Latvian"],
+["🇱🇹","Lietuvių","Lithuanian"],
+["🇦🇱","Shqip","Albanian"],
+["🇲🇰","Македонски","Macedonian"],
+["🇲🇹","Malti","Maltese"],
+["🇲🇦","العربية المغربية","Moroccan Arabic"],
+["🇿🇦","Afrikaans","Afrikaans"],
+["🇸🇴","Soomaali","Somali"],
+["🇸🇼","Kiswahili","Swahili"],
+["🇪🇹","አማርኛ","Amharic"],
+["🇳🇬","Yorùbá","Yoruba"],
+["🇰🇪","Kikuyu","Kikuyu"],
+["🇱🇦","ລາວ","Lao"],
+["🇰🇭","ខ្មែរ","Khmer"],
+["🇳🇵","नेपाली","Nepali"],
+["🇱🇰","සිංහල","Sinhala"],
+["🇲🇲","မြန်မာ","Burmese"],
+["🇲🇻","ދިވެހި","Dhivehi"],
+["🇦🇫","پښتو","Pashto"],
+["🇦🇲","Հայերեն","Armenian"],
+["🇪🇸","Català","Catalan"],
+["🇪🇸","Galego","Galician"],
+["🇧🇷","Português BR","Brazilian Portuguese"],
+["🇲🇽","Español MX","Mexican Spanish"],
+["🇨🇦","Français CA","Canadian French"],
+["🇨🇭","Schweizerdeutsch","Swiss German"],
+["🇮🇳","ਪੰਜਾਬੀ","Punjabi"],
+["🇮🇳","தமிழ்","Tamil"],
+["🇮🇳","తెలుగు","Telugu"],
+["🇮🇳","ಕನ್ನಡ","Kannada"],
+["🇮🇳","മലയാളം","Malayalam"],
+["🇮🇳","मराठी","Marathi"],
+["🇮🇳","ગુજરાતી","Gujarati"],
+["🇮🇳","ଓଡ଼ିଆ","Odia"],
+["🇮🇳","অসমীয়া","Assamese"],
+["🇵🇭","Cebuano","Cebuano"],
+["🇵🇭","Ilocano","Ilocano"],
+["🇵🇪","Quechua","Quechua"],
+["🇧🇴","Aymara","Aymara"],
+["🇮🇩","Javanese","Javanese"],
+["🇮🇩","Sundanese","Sundanese"],
+["🇳🇿","Māori","Maori"],
+["🇼🇸","Samoan","Samoan"],
+["🇹🇴","Tongan","Tongan"],
+["🌐","Esperanto","Esperanto"],
+["🌐","Latin","Latin"],
+["🌐","Hausa","Hausa"],
+["🌐","Igbo","Igbo"],
+["🌐","Zulu","Zulu"],
+["🌐","Xhosa","Xhosa"],
+["🌐","Shona","Shona"],
+["🌐","Malagasy","Malagasy"],
+["🌐","Nepali","Nepali"],
+["🌐","Pashto","Pashto"],
+["🌐","Kurdî","Kurdish"],
+["🌐","Uyghur","Uyghur"],
+["🌐","Tatar","Tatar"],
+["🌐","Bashkir","Bashkir"],
+["🌐","Aragonese","Aragonese"],
+["🌐","Basque","Basque"],
+["🌐","Breton","Breton"],
+["🌐","Corsican","Corsican"],
+["🌐","Luxembourgish","Luxembourgish"],
+["🌐","Welsh","Welsh"],
+["🌐","Scottish Gaelic","Scottish Gaelic"]
+];
+
+const target=document.getElementById("target");
+const source=document.getElementById("source");
+const grid=document.getElementById("languageGrid");
+
+languages.forEach((l,i)=>{
+
+let option=document.createElement("option");
+option.value=l[2];
+option.textContent=l[0]+" "+l[1];
+target.appendChild(option);
+
+if(i>0){
+let o=document.createElement("option");
+o.value=l[2];
+o.textContent=l[0]+" "+l[1];
+source.appendChild(o);
+}
+
+let div=document.createElement("div");
+div.className="lang";
+div.innerHTML=`${l[0]} <b>${l[1]}</b>`;
+grid.appendChild(div);
+
+});
+
+const movie=document.getElementById("movie");
+
+movie.addEventListener("change",function(){
+
+if(this.files.length){
+
+let file=this.files[0];
+let box=document.getElementById("fileBox");
+
+box.style.display="block";
+box.innerHTML=
+"🎬 <b>"+file.name+
+"</b><br><small>"+
+(Math.round(file.size/1024/1024*100)/100)+
+" MB</small>";
+
+}
+
+});
+
+function translateMovie(){
+
+if(!movie.files.length){
+
+alert("Avval kino yoki videoni yuklang 🎬");
+return;
+
+}
+
+let progress=document.getElementById("progress");
+let bar=document.getElementById("bar");
+let status=document.getElementById("status");
+
+progress.style.display="block";
+
+let steps=[
+["🎬 Video qabul qilindi...",10],
+["🎙️ Nutq aniqlanmoqda...",25],
+["📝 Audio matnga aylantirilmoqda...",40],
+["🌍 "+target.options[target.selectedIndex].text+" tiliga tarjima qilinmoqda...",60],
+["🔊 AI ovoz tayyorlamoqda...",78],
+["🎞️ Video qayta yig‘ilmoqda...",92],
+["✨ VOXIA tayyor!",100]
+];
+
+let i=0;
+
+function next(){
+
+if(i>=steps.length)return;
+
+status.textContent=steps[i][0];
+bar.style.width=steps[i][1]+"%";
+
+i++;
+setTimeout(next,1200);
+
+}
+
+next();
+
+}
+
+</script>
+
+</body>
+</html>
