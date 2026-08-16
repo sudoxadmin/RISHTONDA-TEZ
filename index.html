@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RISHTONDA TEZ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: auto;
+      min-height: 100vh;
+      background: white;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 22px 18px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 20px 16px 35px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .location-box {
+      background: #f1f1f1;
+      padding: 16px;
+      border-radius: 15px;
+      margin-bottom: 18px;
+    }
+
+    .location-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+    }
+
+    .icon {
+      font-size: 22px;
+    }
+
+    .location-text {
+      font-size: 15px;
+      color: #333;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 15px;
+      padding: 17px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .taxi-btn {
+      background: #111;
+      color: white;
+    }
+
+    .location-btn {
+      background: #e9e9e9;
+      color: #111;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .service {
+      background: #f4f4f4;
+      border-radius: 18px;
+      padding: 22px 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .service-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .status {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      background: #e8f7e8;
+      border-radius: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="logo">🚕 RISHTONDA TEZ</div>
+    <div class="subtitle">Rishtondagi tez va qulay xizmat</div>
+  </header>
+
+  <div class="content">
+
+    <div class="title">Qayerga boramiz?</div>
+
+    <div class="location-box">
+
+      <div class="location-row">
+        <div class="icon">📍</div>
+        <div class="location-text" id="currentLocation">
+          Lokatsiyangiz aniqlanmagan
+        </div>
+      </div>
+
+      <div class="location-row">
+        <div class="icon">🏁</div>
+        <div class="location-text">
+          Boradigan manzilingizni tanlang
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn location-btn" onclick="getLocation()">
+      📍 Lokatsiyamni aniqlash
+    </button>
+
+    <button class="btn taxi-btn" onclick="callTaxi()">
+      🚕 TAXI CHAQRISH
+    </button>
+
+    <div class="services">
+
+      <div class="service">
+        <div class="service-icon">🚕</div>
+        Taxi
+      </div>
+
+      <div class="service">
+        <div class="service-icon">🍔</div>
+        Oshxona
+      </div>
+
+      <div class="service">
+        <div class="service-icon">🛒</div>
+        Do‘kon
+      </div>
+
+      <div class="service">
+        <div class="service-icon">📦</div>
+        Yetkazib berish
+      </div>
+
+    </div>
+
+    <div class="status" id="status">
+      🚕 Buyurtmangiz qabul qilindi!
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 RISHTONDA TEZ
+  </footer>
+
+</div>
+
+<script>
+
+function getLocation() {
+
+  const locationText = document.getElementById("currentLocation");
+
+  if (!navigator.geolocation) {
+    locationText.innerText = "Telefoningiz lokatsiyani qo‘llab-quvvatlamaydi";
+    return;
+  }
+
+  locationText.innerText = "📍 Lokatsiya aniqlanmoqda...";
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(position) {
+
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      locationText.innerText =
+        "Lokatsiya topildi ✅ " +
+        lat.toFixed(5) + ", " +
+        lon.toFixed(5);
+
+    },
+
+    function() {
+
+      locationText.innerText =
+        "Lokatsiyaga ruxsat berilmadi";
+
+    }
+
+  );
+}
+
+function callTaxi() {
+
+  document.getElementById("status").style.display = "block";
+
+  document.getElementById("status").innerText =
+    "🚕 Taxi buyurtmangiz qabul qilindi!";
+
+}
+
+</script>
+
+</body>
+</html>
