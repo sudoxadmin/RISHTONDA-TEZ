@@ -6,11 +6,7 @@
 <title>VOXIA — AI Video Translator</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:Arial,Helvetica,sans-serif;
@@ -19,8 +15,6 @@ body{
   background:#050816;
   overflow-x:hidden;
 }
-
-/* BACKGROUND */
 
 body::before{
   content:"";
@@ -48,8 +42,6 @@ body::after{
   z-index:-2;
 }
 
-/* NAVBAR */
-
 nav{
   height:72px;
   padding:0 7%;
@@ -76,7 +68,6 @@ nav{
 .nav-right{
   display:flex;
   gap:10px;
-  align-items:center;
 }
 
 .nav-btn{
@@ -85,10 +76,7 @@ nav{
   color:white;
   padding:10px 17px;
   border-radius:12px;
-  cursor:pointer;
 }
-
-/* HERO */
 
 .hero{
   text-align:center;
@@ -103,12 +91,6 @@ nav{
   background:rgba(255,255,255,.06);
   color:#9be7ff;
   margin-bottom:22px;
-  animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 0 rgba(0,180,255,0)}
-  50%{box-shadow:0 0 30px rgba(0,180,255,.22)}
 }
 
 h1{
@@ -131,8 +113,6 @@ h1{
   line-height:1.6;
 }
 
-/* APP */
-
 .app{
   width:min(900px,92%);
   margin:25px auto 70px;
@@ -141,10 +121,7 @@ h1{
   background:rgba(255,255,255,.055);
   backdrop-filter:blur(20px);
   border-radius:28px;
-  box-shadow:0 30px 100px rgba(0,0,0,.35);
 }
-
-/* UPLOAD */
 
 .upload{
   border:2px dashed rgba(0,200,255,.45);
@@ -155,14 +132,7 @@ h1{
   justify-content:center;
   text-align:center;
   cursor:pointer;
-  transition:.3s;
   background:rgba(0,170,255,.035);
-}
-
-.upload:hover{
-  transform:translateY(-3px);
-  border-color:#00d9ff;
-  background:rgba(0,170,255,.08);
 }
 
 .upload-icon{
@@ -183,8 +153,6 @@ h1{
   display:none;
 }
 
-/* VIDEO */
-
 .video-box{
   display:none;
   margin-top:25px;
@@ -196,8 +164,6 @@ video{
   border-radius:18px;
   background:#000;
 }
-
-/* CONTROLS */
 
 .controls{
   display:grid;
@@ -230,8 +196,6 @@ select{
   outline:none;
 }
 
-/* BUTTON */
-
 .translate{
   width:100%;
   border:0;
@@ -243,20 +207,12 @@ select{
   font-weight:bold;
   cursor:pointer;
   background:linear-gradient(90deg,#6d3cff,#009dff);
-  box-shadow:0 10px 35px rgba(0,130,255,.25);
-  transition:.25s;
 }
 
-.translate:hover{
-  transform:translateY(-2px);
-  box-shadow:0 15px 45px rgba(0,130,255,.4);
+.translate:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
-
-.translate:active{
-  transform:scale(.98);
-}
-
-/* PROGRESS */
 
 .progress{
   display:none;
@@ -285,8 +241,6 @@ select{
   transition:width .4s;
 }
 
-/* RESULT */
-
 .result{
   display:none;
   margin-top:25px;
@@ -296,23 +250,12 @@ select{
   background:rgba(0,255,170,.04);
 }
 
-.success{
-  color:#36e8a5;
-  font-size:18px;
-  font-weight:bold;
+.result-text{
+  margin-top:12px;
+  color:#dce5f5;
+  line-height:1.7;
+  white-space:pre-wrap;
 }
-
-.download{
-  display:inline-block;
-  margin-top:15px;
-  padding:12px 20px;
-  background:#14b87a;
-  color:white;
-  text-decoration:none;
-  border-radius:12px;
-}
-
-/* LANGUAGES */
 
 .languages{
   width:min(1000px,92%);
@@ -345,8 +288,6 @@ select{
   color:#c8d0df;
 }
 
-/* FEATURES */
-
 .features{
   width:min(1050px,92%);
   margin:auto;
@@ -361,12 +302,6 @@ select{
   border-radius:20px;
   background:rgba(255,255,255,.045);
   border:1px solid rgba(255,255,255,.1);
-  transition:.3s;
-}
-
-.feature:hover{
-  transform:translateY(-6px);
-  border-color:rgba(0,210,255,.4);
 }
 
 .feature-icon{
@@ -383,8 +318,6 @@ select{
   line-height:1.5;
 }
 
-/* FOOTER */
-
 footer{
   text-align:center;
   padding:35px;
@@ -393,34 +326,12 @@ footer{
 }
 
 @media(max-width:700px){
-
-  nav{
-    padding:0 5%;
-  }
-
-  .nav-btn{
-    display:none;
-  }
-
-  .app{
-    padding:18px;
-  }
-
-  .controls{
-    grid-template-columns:1fr;
-  }
-
-  .features{
-    grid-template-columns:1fr;
-  }
-
-  .hero{
-    padding-top:50px;
-  }
-
-  h1{
-    font-size:48px;
-  }
+  nav{padding:0 5%}
+  .nav-btn{display:none}
+  .app{padding:18px}
+  .controls{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr}
+  h1{font-size:48px}
 }
 </style>
 </head>
@@ -429,16 +340,13 @@ footer{
 
 <nav>
   <div class="logo">VOXIA</div>
-
   <div class="nav-right">
     <button class="nav-btn">🌐 Til</button>
     <button class="nav-btn">Kirish</button>
   </div>
 </nav>
 
-
 <section class="hero">
-
   <div class="badge">✦ AI POWERED VIDEO TRANSLATION</div>
 
   <h1>
@@ -447,34 +355,22 @@ footer{
   </h1>
 
   <p>
-    VOXIA — videodagi nutqni boshqa tillarga tarjima qilish,
-    subtitr yaratish va kelajakda ovozni ham yangi tilga moslashtirish
-    uchun yaratilgan AI platforma.
+    VOXIA — videodagi nutqni aniqlab, tanlangan tilga
+    AI yordamida tarjima qiluvchi platforma.
   </p>
-
 </section>
-
 
 <section class="app">
 
   <label class="upload" for="videoInput">
-
     <div>
-
       <div class="upload-icon">🎬</div>
-
       <h2>Videoni shu yerga yuklang</h2>
-
-      <p>
-        MP4, MOV, WEBM va boshqa video formatlari
-      </p>
-
+      <p>MP4, MOV, WEBM va boshqa video formatlari</p>
       <p style="margin-top:15px;color:#00d9ff">
         Fayl tanlash uchun bosing
       </p>
-
     </div>
-
   </label>
 
   <input
@@ -483,23 +379,16 @@ footer{
     accept="video/*"
   >
 
-
   <div class="video-box" id="videoBox">
 
-    <video
-      id="video"
-      controls
-      playsinline>
-    </video>
+    <video id="video" controls playsinline></video>
 
     <div class="controls">
 
       <div class="field">
-
         <label>🎙 Asl til</label>
 
         <select id="sourceLang">
-
           <option value="auto">Avtomatik aniqlash</option>
           <option>O'zbek</option>
           <option>English</option>
@@ -509,26 +398,16 @@ footer{
           <option>Deutsch</option>
           <option>Français</option>
           <option>Español</option>
-          <option>Italiano</option>
-          <option>Português</option>
-          <option>한국어</option>
-          <option>中文</option>
-          <option>日本語</option>
-
         </select>
-
       </div>
 
-
       <div class="field">
-
         <label>🌍 Tarjima qilinadigan til</label>
 
         <select id="targetLang">
-
           <option>O'zbek</option>
           <option>English</option>
-          <option>Русский</option>
+          <option selected>Русский</option>
           <option>Türkçe</option>
           <option>العربية</option>
           <option>Deutsch</option>
@@ -548,76 +427,43 @@ footer{
           <option>Қазақша</option>
           <option>Кыргызча</option>
           <option>Тоҷикӣ</option>
-
         </select>
-
       </div>
 
     </div>
 
-
     <button
       class="translate"
+      id="translateButton"
       onclick="startTranslation()">
-
       ✨ AI TARJIMA QILISH
-
     </button>
-
 
     <div class="progress" id="progress">
 
       <div class="progress-text">
-
-        <span id="status">
-          AI tayyorlanmoqda...
-        </span>
-
+        <span id="status">AI tayyorlanmoqda...</span>
         <span id="percent">0%</span>
-
       </div>
 
       <div class="progress-bar">
-
-        <div
-          class="progress-fill"
-          id="progressFill">
-        </div>
-
+        <div class="progress-fill" id="progressFill"></div>
       </div>
 
     </div>
 
-
-    <div class="result" id="result">
-
-      <div class="success">
-        ✓ Tarjima jarayoni yakunlandi
-      </div>
-
-      <p style="color:#9aa6bd;margin-top:8px">
-        Demo rejim: keyingi bosqichda haqiqiy AI server
-        ulanadi.
-      </p>
-
-    </div>
+    <div class="result" id="result"></div>
 
   </div>
-
 </section>
-
 
 <section class="languages">
 
-  <h2>🌍 Dunyoning turli tillari</h2>
+  <h2>🌍 Ko‘p tilli tarjima</h2>
 
-  <p>
-    VOXIA kelajakda ko‘plab tillarda video tarjimasini
-    qo‘llab-quvvatlash uchun ishlab chiqilmoqda.
-  </p>
+  <p>VOXIA ko‘plab tillarga tarjima qilish uchun ishlab chiqilgan.</p>
 
   <div class="language-grid">
-
     <div class="lang">🇺🇿 O'zbek</div>
     <div class="lang">🇬🇧 English</div>
     <div class="lang">🇷🇺 Русский</div>
@@ -635,70 +481,39 @@ footer{
     <div class="lang">🇰🇿 Қазақша</div>
     <div class="lang">🇰🇬 Кыргызча</div>
     <div class="lang">🇹🇯 Тоҷикӣ</div>
-    <div class="lang">🇺🇦 Українська</div>
-    <div class="lang">🇵🇱 Polski</div>
-    <div class="lang">🇳🇱 Nederlands</div>
-
   </div>
 
 </section>
-
 
 <section class="features">
 
   <div class="feature">
-
     <div class="feature-icon">🎬</div>
-
     <h3>Video yuklash</h3>
-
-    <p>
-      Foydalanuvchi o‘z videosini platformaga
-      yuklashi mumkin.
-    </p>
-
+    <p>Video faylni to‘g‘ridan-to‘g‘ri platformaga yuklash.</p>
   </div>
 
-
   <div class="feature">
-
     <div class="feature-icon">🧠</div>
-
     <h3>AI tarjima</h3>
-
-    <p>
-      Video nutqini aniqlash va boshqa tilga
-      tarjima qilish tizimi.
-    </p>
-
+    <p>Videodagi nutqni AI orqali aniqlash va tarjima qilish.</p>
   </div>
 
-
   <div class="feature">
-
     <div class="feature-icon">🌍</div>
-
     <h3>Ko‘p tilli</h3>
-
-    <p>
-      Platformani imkon qadar ko‘p tillarga
-      kengaytirish mumkin.
-    </p>
-
+    <p>Turli tillarga tarjima qilish imkoniyati.</p>
   </div>
 
 </section>
 
-
 <footer>
-
-  <strong>VOXIA</strong> © 2026 —
-  AI Video Translation Platform
-
+  <strong>VOXIA</strong> © 2026 — AI Video Translation Platform
 </footer>
 
-
 <script>
+
+const SERVER_URL = "https://voxia-server.onrender.com";
 
 const input = document.getElementById("videoInput");
 const video = document.getElementById("video");
@@ -718,26 +533,45 @@ input.addEventListener("change", function(){
   const url = URL.createObjectURL(file);
 
   video.src = url;
-
   videoBox.style.display = "block";
 
   videoBox.scrollIntoView({
     behavior:"smooth",
     block:"center"
   });
-
 });
 
 
 async function startTranslation(){
 
-  const progress = document.getElementById("progress");
-  const fill = document.getElementById("progressFill");
-  const percent = document.getElementById("percent");
-  const status = document.getElementById("status");
-  const result = document.getElementById("result");
+  const file = input.files[0];
 
-  const targetLanguage = document.getElementById("targetLang")?.value;
+  const targetLanguage =
+    document.getElementById("targetLang").value;
+
+  const progress =
+    document.getElementById("progress");
+
+  const fill =
+    document.getElementById("progressFill");
+
+  const percent =
+    document.getElementById("percent");
+
+  const status =
+    document.getElementById("status");
+
+  const result =
+    document.getElementById("result");
+
+  const button =
+    document.getElementById("translateButton");
+
+  if(!file){
+    alert("Avval video yuklang.");
+    return;
+  }
+
   if(!targetLanguage){
     alert("Tarjima tilini tanlang.");
     return;
@@ -746,42 +580,60 @@ async function startTranslation(){
   progress.style.display = "block";
   result.style.display = "none";
 
+  button.disabled = true;
+
   fill.style.width = "10%";
   percent.textContent = "10%";
-  status.textContent = "Tarjima tayyorlanmoqda...";
+  status.textContent = "Video serverga yuborilmoqda...";
 
-  try {
+  try{
 
-    /*
-      MUHIM:
-      Quyidagi URL o‘rniga sizning Render serveringizning
-      ANIQ URL manzilini yozamiz.
-    */
+    const formData = new FormData();
 
-    const SERVER_URL = "https://voxia-server.onrender.com";
+    formData.append("video", file);
+    formData.append("targetLanguage", targetLanguage);
 
-    const response = await fetch(SERVER_URL + "/translate", {
-      method: "POST",
+    fill.style.width = "30%";
+    percent.textContent = "30%";
+    status.textContent = "Video AI ga yuborilmoqda...";
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+    const response = await fetch(
+      SERVER_URL + "/translate",
+      {
+        method:"POST",
+        body:formData
+      }
+    );
 
-      body: JSON.stringify({
-        text: "Videodagi nutqni tarjima qilish",
-        targetLanguage: targetLanguage
-      })
-    });
+    fill.style.width = "60%";
+    percent.textContent = "60%";
+    status.textContent = "AI videodagi nutqni aniqlamoqda...";
 
-    fill.style.width = "70%";
-    percent.textContent = "70%";
-    status.textContent = "AI tarjima qilmoqda...";
+    let data;
 
-    const data = await response.json();
+    try{
+      data = await response.json();
+    }catch(e){
+      throw new Error(
+        "Serverdan noto‘g‘ri javob keldi."
+      );
+    }
 
     if(!response.ok || !data.success){
-      throw new Error(data.error || "Tarjima serverida xatolik.");
+
+      throw new Error(
+        data.error ||
+        "Serverda xatolik yuz berdi."
+      );
     }
+
+    fill.style.width = "90%";
+    percent.textContent = "90%";
+    status.textContent = "AI tarjima qilmoqda...";
+
+    await new Promise(resolve =>
+      setTimeout(resolve,500)
+    );
 
     fill.style.width = "100%";
     percent.textContent = "100%";
@@ -790,16 +642,21 @@ async function startTranslation(){
     result.style.display = "block";
 
     result.innerHTML = `
-      <div style="font-size:22px;font-weight:bold;margin-bottom:10px;">
+      <div
+        style="
+          color:#36e8a5;
+          font-size:21px;
+          font-weight:bold;
+        ">
         ✅ Tarjima tayyor
       </div>
 
-      <div style="font-size:17px;line-height:1.6;">
-        ${data.translation}
+      <div class="result-text">
+        ${escapeHtml(data.translation || "")}
       </div>
     `;
 
-  } catch(error) {
+  }catch(error){
 
     console.error(error);
 
@@ -811,12 +668,33 @@ async function startTranslation(){
     result.style.display = "block";
 
     result.innerHTML = `
-      <div style="color:#ff6b6b;font-size:18px;">
-        ❌ ${error.message}
+      <div
+        style="
+          color:#ff6b6b;
+          font-size:18px;
+          font-weight:bold;
+        ">
+        ❌ ${escapeHtml(error.message)}
       </div>
     `;
+
+  }finally{
+
+    button.disabled = false;
   }
 }
+
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
 </script>
 
 </body>
